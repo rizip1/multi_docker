@@ -9,7 +9,7 @@ services:
       - '3050:80'
     depends_on:
       - server
-      - client
+      - frontend
   postgres:
     image: 'postgres:latest'
   redis:
@@ -31,13 +31,13 @@ services:
       - PGDATABASE=postgres
       - PGPASSWORD=postgres_password
       - PGPORT=5432
-  client:
+  frontend:
     build:
       dockerfile: Dockerfile.dev
-      context: ./client
+      context: ./frontend
     volumes:
       - /app/node_modules 
-      - ./client:/app
+      - ./frontend:/app
   worker:
     build:
       dockerfile: Dockerfile.dev
