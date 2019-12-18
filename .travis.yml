@@ -3,21 +3,21 @@ services:
   - docker
 
 before_install:
-  - docker build -t my-image -f ./frontend/Dockerfile.dev ./frontend
+  - docker build -t rizip1/test-image -f ./frontend/Dockerfile.dev ./frontend
 
 script:
-  - docker run -e CI=true my-image npm run test
+  - docker run -e CI=true rizip1/test-image npm run test
 
 after_sucess:
   # build all images
-  - docker build -t multi-frontend ./frontend
-  - docker build -t multi-nginx ./nginx
-  - docker build -t multi-server ./server
-  - docker build -t multi-worker ./worker
+  - docker build -t rizip1/multi-frontend ./frontend
+  - docker build -t rizip1/multi-nginx ./nginx
+  - docker build -t rizip1/multi-server ./server
+  - docker build -t rizip1/multi-worker ./worker
   # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # now we need to push those images to docker hub
-  - docker push multi-frontend
-  - docker push multi-nginx
-  - docker push multi-server
-  - docker push multi-worker
+  - docker push rizip1/multi-frontend
+  - docker push rizip1/multi-nginx
+  - docker push rizip1/multi-server
+  - docker push rizip1/multi-worker
